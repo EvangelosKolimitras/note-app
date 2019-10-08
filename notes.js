@@ -1,5 +1,6 @@
-const fs = require( 'fs' )
+
 const chalk = require( 'chalk' )
+const {loadNotes , saveNotes} = require( './utils' )
 
 // Adds a note 
 exports.addNote = ( title , body ) => {
@@ -8,6 +9,7 @@ exports.addNote = ( title , body ) => {
 	const notes = loadNotes()
 	const dubNotes = notes.filter( note => note.title === title )
 
+	// Check for dublicate titles
 	if( dubNotes.length !== 0 ) {
 
 		console.log( chalk.red.bold.underline( 'Error: Dublicate note title' ) )
@@ -20,26 +22,15 @@ exports.addNote = ( title , body ) => {
 		title ,
 		body
 	}
-
 	notes.push( data )
-
 	saveNotes( notes )
 
-	console.log( notes )
-
 }
-const saveNotes = notes => fs.writeFileSync( 'data.json' , JSON.stringify( notes ) )
 
-const loadNotes = () => {
+// Delete a note 
+exports.deleteNote = title => {
 
-	try {
-
-		return JSON.parse( fs.readFileSync( 'data.json' , err => err ) )
-
-	} catch ( error ) {
-
-		return []
-
-	}
+	const notes = loadNotes().map( el => el ).filter( note => note.title !== title )
+	saveNotes( notes )
 
 }

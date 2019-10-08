@@ -1,7 +1,7 @@
 
 const yargs = require( 'yargs' )
 
-const {addNote , getNote} = require( './notes' )
+const {addNote , deleteNote} = require( './notes' )
 // add, remove, read , delete
 
 const data = {name : 'evangelos'}
@@ -12,7 +12,7 @@ yargs.command({
 	describe : 'Add a new command' ,
 	builder  : {
 		title : {
-			describe     : 'Note\'s title' ,
+			describe     : 'Note\'s title to be added' ,
 			demandOption : true ,
 			type         : 'string'
 		} ,
@@ -39,18 +39,25 @@ yargs.command({
 yargs.command({
 	command  : 'read' ,
 	describe : 'Read a note' ,
-	handler  : function() {
+	handler  : function( ) {
 
-		console.log( 'Reading a note' )
+		// deleteNote( argv.title )
 
 	}
 })
 yargs.command({
 	command  : 'delete' ,
 	describe : 'Delete a note' ,
-	handler  : function() {
+	builder  : {
+		title : {
+			describe     : 'Note\'s title to be deleted' ,
+			demandOption : true ,
+			type         : 'string'
+		}
+	} ,
+	handler : function( argv ) {
 
-		console.log( 'Deleting a note' )
+		deleteNote( argv.title )
 
 	}
 })
