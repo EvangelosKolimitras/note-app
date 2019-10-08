@@ -13,5 +13,14 @@ yargs.command({
 
 	}
 })
+yargs.command({
+	command  : 'list' ,
+	describe : 'List all commands' ,
+	handler  : function() {
+
+		console.log( 'Listing all notes' )
+
+	}
+})
 
 console.log( yargs.argv )
