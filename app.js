@@ -1,15 +1,18 @@
-const fs = require( 'fs' )
-const chalk = require( 'chalk' )
+
 const yargs = require( 'yargs' )
 
+const {addNote , getNote} = require( './notes' )
 // add, remove, read , delete
+
+const data = {name : 'evangelos'}
+
 
 yargs.command({
 	command  : 'add' ,
 	describe : 'Add a new command' ,
 	builder  : {
 		title : {
-			describe     : 'Note title' ,
+			describe     : 'Note\'s title' ,
 			demandOption : true ,
 			type         : 'string'
 		} ,
@@ -19,12 +22,7 @@ yargs.command({
 			type     : 'string'
 		}
 	} ,
-	handler : function( argv ) {
-
-		console.log( `[ ${chalk.green( '✔' )} ] Note Title: ${chalk.blue.bold( argv.title )}` )
-		console.log( `[ ${chalk.green( '✔' )} ] Note Body: ${chalk.blue.bold( argv.body )}` )
-
-	}
+	handler : function( argv ) { addNote( argv.title , argv.body ) }
 })
 
 yargs.command({
@@ -32,7 +30,8 @@ yargs.command({
 	describe : 'List all commands' ,
 	handler  : function() {
 
-		console.log( 'Listing all notes' )
+		const data = fs.readFileSync( 'data.json' , err => err )
+		console.log([ ... JSON.parse( data ) ])
 
 	}
 })
