@@ -7,12 +7,26 @@ const yargs = require( 'yargs' )
 yargs.command({
 	command  : 'add' ,
 	describe : 'Add a new command' ,
-	handler  : function() {
+	builder  : {
+		title : {
+			describe     : 'Note title' ,
+			demandOption : true ,
+			type         : 'string'
+		} ,
+		body : {
+			describe : 'The note\'s body' ,
+			require  : true ,
+			type     : 'string'
+		}
+	} ,
+	handler : function( argv ) {
 
-		console.log( 'Adding a new note' )
+		console.log( `[ ${chalk.green( '✔' )} ] Note Title: ${chalk.blue.bold( argv.title )}` )
+		console.log( `[ ${chalk.green( '✔' )} ] Note Body: ${chalk.blue.bold( argv.body )}` )
 
 	}
 })
+
 yargs.command({
 	command  : 'list' ,
 	describe : 'List all commands' ,
@@ -22,6 +36,7 @@ yargs.command({
 
 	}
 })
+
 yargs.command({
 	command  : 'read' ,
 	describe : 'Read a note' ,
@@ -41,4 +56,4 @@ yargs.command({
 	}
 })
 
-console.log( yargs.argv )
+yargs.parse()
