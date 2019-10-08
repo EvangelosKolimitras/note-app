@@ -22,5 +22,14 @@ yargs.command({
 
 	}
 })
+yargs.command({
+	command  : 'read' ,
+	describe : 'Read a note' ,
+	handler  : function() {
+
+		console.log( 'Reading a note' )
+
+	}
+})
 
 console.log( yargs.argv )
