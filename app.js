@@ -1,10 +1,19 @@
 
 const yargs = require( 'yargs' )
 
-const {addNote , deleteNote} = require( './notes' )
+const {addNote , deleteNote , listNotes , readNote} = require( './notes' )
 // add, remove, read , delete
 
 const data = {name : 'evangelos'}
+
+class Options {
+
+	constructor( command , describe , builder ) {
+
+	}
+
+
+}
 
 
 yargs.command({
@@ -28,22 +37,20 @@ yargs.command({
 yargs.command({
 	command  : 'list' ,
 	describe : 'List all commands' ,
-	handler  : function() {
-
-		const data = fs.readFileSync( 'data.json' , err => err )
-		console.log([ ... JSON.parse( data ) ])
-
-	}
+	handler  : function() { listNotes() }
 })
 
 yargs.command({
 	command  : 'read' ,
 	describe : 'Read a note' ,
-	handler  : function( ) {
-
-		// deleteNote( argv.title )
-
-	}
+	builder  : {
+		title : {
+			describe     : 'Note\'s title to be read' ,
+			demandOption : true ,
+			type         : 'string'
+		}
+	} ,
+	handler : function() { readNote() }
 })
 yargs.command({
 	command  : 'delete' ,
@@ -55,11 +62,7 @@ yargs.command({
 			type         : 'string'
 		}
 	} ,
-	handler : function( argv ) {
-
-		deleteNote( argv.title )
-
-	}
+	handler : function( argv ) { deleteNote( argv.title ) }
 })
 
 yargs.parse()
