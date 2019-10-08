@@ -31,5 +31,14 @@ yargs.command({
 
 	}
 })
+yargs.command({
+	command  : 'delete' ,
+	describe : 'Delete a note' ,
+	handler  : function() {
+
+		console.log( 'Deleting a note' )
+
+	}
+})
 
 console.log( yargs.argv )
